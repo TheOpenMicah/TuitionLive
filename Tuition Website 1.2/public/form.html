@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Your Interest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hidden-form, .hidden-video {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .visible {
+            display: block;
+            opacity: 1;
+        }
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+            border-color: rgba(59, 130, 246, 1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div id="form-container" class="visible p-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-2">Register Your Interest</h2>
+            <p class="text-center text-gray-600 mb-8">Please fill out the form below, and we'll be in touch shortly.</p>
+            <form id="interest-form" class="space-y-6">
+                <!-- Parent's Name -->
+                <div>
+                    <label for="parent-name" class="block text-sm font-medium text-gray-700">Parent's Name</label>
+                    <input type="text" id="parent-name" name="parent-name" required class="form-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <!-- Child's Age -->
+                <div>
+                    <label for="child-age" class="block text-sm font-medium text-gray-700">Child's Age</label>
+                    <input type="number" id="child-age" name="child-age" min="11" max="18" required class="form-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <!-- Reason for Tuition -->
+                <div>
+                    <label for="tuition-reason" class="block text-sm font-medium text-gray-700">Reason for Tuition (e.g., Exam preparation, subject confidence)</label>
+                    <textarea id="tuition-reason" name="tuition-reason" rows="3" required class="form-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                </div>
+                <!-- Child's Needs -->
+                <fieldset>
+                    <legend class="text-sm font-medium text-gray-700">Does the child have any of the following?</legend>
+                    <div class="mt-4 space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="send" name="needs" type="checkbox" value="SEND" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="send" class="font-medium text-gray-700">Special educational needs/disabilities (SEND)</label>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="eal" name="needs" type="checkbox" value="EAL" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="eal" class="font-medium text-gray-700">English as an Additional Language (EAL)</label>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                             <div class="flex items-center h-5">
+                                <input id="other-needs-checkbox" name="needs" type="checkbox" value="Other" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="other-needs-checkbox" class="font-medium text-gray-700">Any other needs that I would find it useful to know</label>
+                            </div>
+                        </div>
+                        <div id="other-needs-container" class="hidden-form ml-8">
+                            <label for="other-needs-text" class="block text-sm font-medium text-gray-500">Please provide details</label>
+                            <textarea id="other-needs-text" name="other-needs-text" rows="2" class="form-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Contact Details -->
+                <fieldset>
+                    <legend class="text-sm font-medium text-gray-700">Preferred Contact Method</legend>
+                    <div class="mt-4 space-y-4">
+                        <div class="flex items-center">
+                            <input id="contact-phone" name="contact-method" type="radio" value="Phone" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                            <label for="contact-phone" class="ml-3 block text-sm font-medium text-gray-700">Phone</label>
+                            <input type="tel" name="phone-number" class="form-input ml-4 flex-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm" placeholder="Your phone number">
+                        </div>
+                        <div class="flex items-center">
+                            <input id="contact-email" name="contact-method" type="radio" value="Email" checked class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                            <label for="contact-email" class="ml-3 block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" name="email-address" class="form-input ml-4 flex-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm" placeholder="Your email address">
+                        </div>
+                         <div class="flex items-center">
+                            <input id="contact-other" name="contact-method" type="radio" value="Other" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                            <label for="contact-other" class="ml-3 block text-sm font-medium text-gray-700">Other</label>
+                            <input type="text" name="other-contact" class="form-input ml-4 flex-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm" placeholder="e.g., WhatsApp, Teams">
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Submit
+                    </button>
+                </div>
+            </form>
+            <p id="form-submitted-message" class="hidden-form text-center mt-6 text-green-700 font-semibold">Thank you! Your interest has been registered successfully.</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const otherNeedsCheckbox = document.getElementById('other-needs-checkbox');
+            const otherNeedsContainer = document.getElementById('other-needs-container');
+            const form = document.getElementById('interest-form');
+            const submittedMessage = document.getElementById('form-submitted-message');
+            // Toggle visibility of the "other needs" text area
+            otherNeedsCheckbox.addEventListener('change', () => {
+                if (otherNeedsCheckbox.checked) {
+                    otherNeedsContainer.classList.add('visible');
+                    otherNeedsContainer.classList.remove('hidden-form');
+                } else {
+                    otherNeedsContainer.classList.add('hidden-form');
+                    otherNeedsContainer.classList.remove('visible');
+                }
+            });
+            // Handle form submission
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                form.classList.add('hidden-form');
+                form.classList.remove('visible');
+                submittedMessage.classList.add('visible');
+                submittedMessage.classList.remove('hidden-form');
+            });
+        });
+    </script>
+</body>
+</html>

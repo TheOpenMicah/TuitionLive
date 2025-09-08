@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eleanor Private Tuition | Bespoke English Tuition for Home Educators</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #FBF7F3; /* Creamy background from flyer */
+            color: #2C2C2C; /* Dark charcoal text */
+        }
+
+        /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Custom colors from flyer */
+        .bg-accent-pink {
+            background-color: #E3BBAA;
+        }
+        .text-accent-pink {
+            color: #E3BBAA;
+        }
+        .hover\:bg-accent-pink-dark:hover {
+            background-color: #d1a998; /* A slightly darker shade for hover */
+        }
+        .border-accent-pink {
+            border-color: #E3BBAA;
+        }
+        .ring-accent-pink:focus {
+            --tw-ring-color: #E3BBAA;
+        }
+        
+        /* Video container styles - FIXED FOR LANDSCAPE VIDEO */
+        .video-container {
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto; /* Center the container */
+            border-radius: 1rem;
+            overflow: hidden;
+            aspect-ratio: 16/9; /* Ensures 16:9 aspect ratio */
+        }
+        .video-player {
+            width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                word-break: break-word;
+                hyphens: auto;
+            }
+            p, label, input, textarea, select, button {
+                word-break: break-word;
+                hyphens: auto;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-serif-display font-medium text-charcoal">Eleanor Tuition</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-700 hover:text-accent-pink transition-colors">About</a>
+                    <a href="#services" class="text-gray-700 hover:text-accent-pink transition-colors">Services</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-accent-pink transition-colors">Pricing</a>
+                    <a href="#contact" class="bg-accent-pink text-white px-5 py-2 rounded-full hover:bg-accent-pink-dark transition-colors font-bold">Enquire Now</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+            <a href="#about" class="block text-gray-700 hover:text-accent-pink transition-colors">About</a>
+            <a href="#services" class="block text-gray-700 hover:text-accent-pink transition-colors">Services</a>
+            <a href="#pricing" class="block text-gray-700 hover:text-accent-pink transition-colors">Pricing</a>
+            <a href="#contact" class="block mt-2 bg-accent-pink text-white px-5 py-2 rounded-full hover:bg-accent-pink-dark transition-colors font-bold text-center">Enquire Now</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero" class="py-24 sm:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="font-serif-display text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight">Eleanor Private Tuition</h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">Creative and inspiring English tuition, tailored for the home-education journey.</p>
+                <a href="#contact" class="mt-10 inline-block bg-accent-pink text-white px-8 py-4 rounded-full hover:bg-accent-pink-dark transition-colors font-bold text-lg shadow-lg">Register Your Interest</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="video-container shadow-xl bg-accent-pink">
+                             <video class="video-player" autoplay loop muted playsinline controls>
+                                <source src="presentation.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h2 class="font-serif-display text-3xl sm:text-4xl font-bold">A Passion for Nurturing Young Writers</h2>
+                        <p class="mt-4 text-gray-600">With years of experience and a genuine passion for literature, Eleanor offers a nurturing and effective learning environment. Her teaching philosophy is centered around understanding each student's unique interests and learning style to create tailored English lessons that inspire and motivate.</p>
+                        <p class="mt-4 text-gray-600">Her approach is perfect for home-educating families seeking to foster a deep and lasting love for language and storytelling, moving beyond the curriculum to explore the creative world of words.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-serif-display text-3xl sm:text-4xl font-bold">Tailored English Tuition</h2>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Flexible and engaging support designed for home-educated children.</p>
+                <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg text-left hover:shadow-2xl transition-shadow duration-300">
+                        <h3 class="font-serif-display text-2xl font-semibold">Creative Writing Workshops</h3>
+                        <p class="mt-3 text-gray-600">Unlock your child's imagination through fun, interactive workshops on character creation, plot development, and poetry.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg text-left hover:shadow-2xl transition-shadow duration-300">
+                        <h3 class="font-serif-display text-2xl font-semibold">Bespoke Home-Ed Support</h3>
+                        <p class="mt-3 text-gray-600">Collaborative lesson planning to complement your home-education curriculum, focusing on core literacy and comprehension skills.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg text-left hover:shadow-2xl transition-shadow duration-300">
+                        <h3 class="font-serif-display text-2xl font-semibold">Building a Love for Literature</h3>
+                        <p class="mt-3 text-gray-600">Journey through classic and contemporary children's literature to develop critical analysis and a lifelong passion for reading.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inclusive Pricing Section -->
+        <section id="pricing" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-serif-display text-3xl sm:text-4xl font-bold">Accessible & Inclusive Pricing</h2>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">We are committed to making high-quality tuition accessible to everyone.</p>
+                <div class="mt-12 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
+                     <div class="bg-gray-50 p-8 rounded-2xl">
+                        <h3 class="font-serif-display text-2xl font-semibold">Discounts & Support</h3>
+                        <p class="mt-3 text-gray-700">We proudly offer discounted rates for families of children with EAL or SEND requirements, and for those in lower income brackets. Please mention this in the enquiry form so we can discuss a plan that works for you.</p>
+                    </div>
+                     <div class="bg-gray-50 p-8 rounded-2xl">
+                        <h3 class="font-serif-display text-2xl font-semibold">Group & Sibling Bookings</h3>
+                        <p class="mt-3 text-gray-700">Learning with friends or siblings can be a fantastic experience. We offer reduced rates for small group sessions and for families booking sessions for more than one child.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl p-8 sm:p-12">
+                    <div id="form-container">
+                        <h2 class="font-serif-display text-3xl sm:text-4xl font-bold text-center">Register Your Interest</h2>
+                        <p class="mt-4 text-gray-600 text-center">Please fill out the form below, and we'll be in touch shortly to discuss your needs.</p>
+                        
+                        <form id="interest-form" class="mt-10 space-y-6">
+                            <!-- Personal Details -->
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="parentName" class="block text-sm font-medium text-gray-700">Parent's Name</label>
+                                    <input type="text" name="parentName" id="parentName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none ring-accent-pink focus:border-accent-pink sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="childAge" class="block text-sm font-medium text-gray-700">Child's Age / Year Group</label>
+                                    <input type="text" name="childAge" id="childAge" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none ring-accent-pink focus:border-accent-pink sm:text-sm">
+                                </div>
+                            </div>
+
+                            <!-- Reason for Tuition -->
+                            <div>
+                                <label for="tuitionReason" class="block text-sm font-medium text-gray-700">Primary Goal for Tuition</label>
+                                <select id="tuitionReason" name="tuitionReason" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none ring-accent-pink focus:border-accent-pink sm:text-sm rounded-md">
+                                    <option>Supplementing Home-Ed Curriculum</option>
+                                    <option>Creative Writing Spark</option>
+                                    <option>Building Reading Confidence</option>
+                                    <option>Support with a Specific Topic</option>
+                                    <option>Group Learning Experience</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Learning Needs -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Which area(s) of English are you interested in?</label>
+                                <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                    <label class="flex items-center space-x-2 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="needs" value="Creative Writing" class="rounded border-gray-300 text-accent-pink shadow-sm focus:border-accent-pink focus:ring ring-offset-0 ring-accent-pink"> <span>Creative Writing</span></label>
+                                    <label class="flex items-center space-x-2 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="needs" value="Reading Comprehension" class="rounded border-gray-300 text-accent-pink shadow-sm focus:border-accent-pink focus:ring ring-offset-0 ring-accent-pink"> <span>Comprehension</span></label>
+                                    <label class="flex items-center space-x-2 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="needs" value="Grammar & Punctuation" class="rounded border-gray-300 text-accent-pink shadow-sm focus:border-accent-pink focus:ring ring-offset-0 ring-accent-pink"> <span>Grammar/Punctuation</span></label>
+                                    <label class="flex items-center space-x-2 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="needs" value="Literature Analysis" class="rounded border-gray-300 text-accent-pink shadow-sm focus:border-accent-pink focus:ring ring-offset-0 ring-accent-pink"> <span>Literature Analysis</span></label>
+                                    <label class="flex items-center space-x-2 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer"><input type="checkbox" id="other-needs-checkbox" name="needs" value="Other" class="rounded border-gray-300 text-accent-pink shadow-sm focus:border-accent-pink focus:ring ring-offset-0 ring-accent-pink"> <span>Other</span></label>
+                                </div>
+                            </div>
+                            <div id="other-needs-container" class="hidden">
+                                <label for="otherNeeds" class="block text-sm font-medium text-gray-700">Please specify other needs (e.g. EAL/SEND/discount eligibility)</label>
+                                <textarea id="otherNeeds" name="otherNeeds" rows="3" class="mt-1 shadow-sm block w-full sm:text-sm border border-gray-300 rounded-md focus:outline-none ring-accent-pink focus:border-accent-pink"></textarea>
+                            </div>
+
+                            <!-- Contact Details -->
+                            <div>
+                               <label for="emailAddress" class="block text-sm font-medium text-gray-700">Email Address</label>
+                               <input type="email" name="emailAddress" id="emailAddress" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none ring-accent-pink focus:border-accent-pink sm:text-sm">
+                            </div>
+                            <div>
+                               <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+                               <input type="tel" name="phoneNumber" id="phoneNumber" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none ring-accent-pink focus:border-accent-pink sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-lg font-bold text-white bg-accent-pink hover:bg-accent-pink-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-pink transition-colors">Submit Enquiry</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Thank you message -->
+                    <div id="thank-you-message" class="hidden text-center">
+                        <h2 class="font-serif-display text-3xl font-bold text-charcoal">Thank You!</h2>
+                        <p class="mt-4 text-lg text-gray-600">Your interest has been registered successfully. We will be in touch via email very soon.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <p>&copy; 2025 Eleanor Private Tuition. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Form logic
+            const otherNeedsCheckbox = document.getElementById('other-needs-checkbox');
+            const otherNeedsContainer = document.getElementById('other-needs-container');
+            const form = document.getElementById('interest-form');
+            const formContainer = document.getElementById('form-container');
+            const thankYouMessage = document.getElementById('thank-you-message');
+
+            // Toggle visibility of the "other needs" text area
+            otherNeedsCheckbox.addEventListener('change', () => {
+                otherNeedsContainer.classList.toggle('hidden', !otherNeedsCheckbox.checked);
+            });
+
+            // Handle form submission (send to backend)
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const data = {
+                    parentName: formData.get('parentName'),
+                    childAge: formData.get('childAge'),
+                    tuitionReason: formData.get('tuitionReason'),
+                    needs: formData.getAll('needs'),
+                    otherNeeds: formData.get('otherNeeds'),
+                    emailAddress: formData.get('emailAddress'),
+                    phoneNumber: formData.get('phoneNumber'),
+                };
+                try {
+                    const response = await fetch('/api/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    if (response.ok) {
+                        formContainer.classList.add('hidden');
+                        thankYouMessage.classList.remove('hidden');
+                    } else {
+                        alert('There was an error submitting your enquiry. Please try again later.');
+                    }
+                } catch (err) {
+                    alert('Network error. Please try again later.');
+                }
+            });
+
+            // Escape key hotkey to open responses.html
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    window.location.href = 'responses.html';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+

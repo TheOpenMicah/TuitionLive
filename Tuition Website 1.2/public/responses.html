@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Responses</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .actioned-row {
+      background-color: #d1fae5 !important;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-8">
+  <div class="w-full max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-4 md:p-8">
+    <h1 class="text-2xl font-bold mb-4">Form Responses</h1>
+    <div id="password-section" class="mb-6">
+      <label for="password-input" class="block mb-2 font-medium">Enter password to view responses:</label>
+      <div class="flex">
+        <input id="password-input" type="password" class="form-input px-3 py-2 border rounded-l w-64" />
+        <button id="password-submit" class="px-4 py-2 bg-blue-600 text-white rounded-r hover:bg-blue-700">Submit</button>
+      </div>
+      <p id="password-error" class="text-red-600 mt-2 hidden">Incorrect password. Try again.</p>
+    </div>
+    <div id="responses-section" class="hidden">
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full text-sm">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="px-4 py-2">Parent</th>
+              <th class="px-4 py-2">Child Age</th>
+              <th class="px-4 py-2">Goal</th>
+              <th class="px-4 py-2">Needs</th>
+              <th class="px-4 py-2">Other Needs</th>
+              <th class="px-4 py-2">Phone</th>
+              <th class="px-4 py-2">Email</th>
+              <th class="px-4 py-2">Submitted</th>
+              <th class="px-4 py-2">Status</th>
+            </tr>
+          </thead>
+          <tbody id="responses-table">
+            <!-- Data will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="delete-actioned-container" class="mt-8 text-center hidden">
+      <button id="delete-actioned-btn" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors">Delete actioned responses</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const passwordInput = document.getElementById('password-input');
+      const passwordSubmit = document.getElementById('password-submit');
+      const passwordSection = document.getElementById('password-section');
+      const passwordError = document.getElementById('password-error');
+      const responsesSection = document.getElementById('responses-section');
+      const responsesTable = document.getElementById('responses-table');
+
+      let currentPassword = '';
+      const fetchAndRenderResponses = (password) => {
+        currentPassword = password; // Store for later button actions
+        fetch('/api/responses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            passwordError.classList.remove('hidden');
+            return;
+          }
+          passwordSection.classList.add('hidden');
+          responsesSection.classList.remove('hidden');
+          responsesTable.innerHTML = '';
+          document.getElementById('delete-actioned-container').classList.remove('hidden');
+
+          // Separate actioned and un-actioned responses
+          const unActioned = data.filter(resp => !resp.actioned);
+          const actioned = data.filter(resp => resp.actioned);
+          const sortedResponses = [...unActioned, ...actioned];
+
+          sortedResponses.forEach(resp => {
+            const tr = document.createElement('tr');
+            tr.className = resp.actioned ? 'actioned-row even:bg-gray-50' : 'even:bg-gray-50';
+            let actionButtonHtml = resp.actioned 
+              ? `<button class='unaction-btn bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 text-xs' data-id='${resp.id}'>Un-action</button>`
+              : `<button class='action-btn bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-xs' data-id='${resp.id}'>Action</button>`;
+            tr.innerHTML = `
+              <td class="border px-4 py-2">${resp.parentName || ''}</td>
+              <td class="border px-4 py-2">${resp.childAge || ''}</td>
+              <td class="border px-4 py-2">${resp.tuitionReason || ''}</td>
+              <td class="border px-4 py-2">${resp.needs || ''}</td>
+              <td class="border px-4 py-2">${resp.otherNeeds || ''}</td>
+              <td class="border px-4 py-2">${resp.phoneNumber || ''}</td>
+              <td class="border px-4 py-2">${resp.emailAddress || ''}</td>
+              <td class="border px-4 py-2">${resp.submittedAt ? new Date(resp.submittedAt).toLocaleString() : ''}</td>
+              <td class="border px-4 py-2 text-center">${actionButtonHtml}</td>
+            `;
+            responsesTable.appendChild(tr);
+          });
+          document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+              const id = this.getAttribute('data-id');
+              fetch(`/api/actioned/${id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: currentPassword })
+              })
+                .then(() => fetchAndRenderResponses(currentPassword));
+            });
+          });
+          document.querySelectorAll('.unaction-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+              const id = this.getAttribute('data-id');
+              fetch(`/api/unactioned/${id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: currentPassword })
+              })
+                .then(() => fetchAndRenderResponses(currentPassword));
+            });
+          });
+        })
+        .catch(err => {
+          passwordError.classList.remove('hidden');
+          console.error(err);
+        });
+      };
+      
+      const submitPassword = () => {
+        const password = passwordInput.value;
+        if (password) {
+          fetchAndRenderResponses(password);
+        }
+      };
+
+      // Delete actioned responses button
+      const deleteActionedBtn = document.getElementById('delete-actioned-btn');
+      deleteActionedBtn.addEventListener('click', async () => {
+        if (!currentPassword) {
+          alert('Please enter the password first.');
+          return;
+        }
+        if (!confirm('Are you sure you want to delete all actioned responses? This cannot be undone.')) return;
+        const res = await fetch('/api/delete-actioned', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: currentPassword })
+        });
+        if (res.ok) {
+          fetchAndRenderResponses(currentPassword);
+        } else {
+          alert('Failed to delete actioned responses.');
+        }
+      });
+
+      passwordSubmit.addEventListener('click', submitPassword);
+      passwordInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+          submitPassword();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
