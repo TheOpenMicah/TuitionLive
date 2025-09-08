@@ -170,6 +170,12 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-serif-display text-3xl sm:text-4xl font-bold">Accessible & Inclusive Pricing</h2>
                 <p class="mt-4 text-gray-600 max-w-2xl mx-auto">We are committed to making high-quality tuition accessible to everyone.</p>
+                <button id="pricing-toggle" class="mt-6 inline-block bg-accent-pink text-white px-6 py-2 rounded-full hover:bg-accent-pink-dark transition-colors font-bold text-lg shadow">More info</button>
+                <div id="pricing-details" class="mt-6 max-w-2xl mx-auto text-left bg-gray-50 p-6 rounded-2xl hidden">
+                    <p class="mb-4">We are committed to making high-quality tuition accessible to everyone. Our base rate is £30 per hour.</p>
+                    <p class="mb-4">Discounted rates are available for families of children with EAL (English as an Additional Language) or SEND (Special Educational Needs and Disabilities), and for those in lower income brackets. If eligible, the rate is £20 per hour.</p>
+                    <p>Group and sibling bookings are also available at reduced rates. Please contact us to discuss your specific needs and eligibility for discounts.</p>
+                </div>
                 <div class="mt-12 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
                      <div class="bg-gray-50 p-8 rounded-2xl">
                         <h3 class="font-serif-display text-2xl font-semibold">Discounts & Support</h3>
@@ -322,9 +328,17 @@
                     window.location.href = 'responses.html';
                 }
             });
+
+            // Pricing section toggle
+            const pricingToggle = document.getElementById('pricing-toggle');
+            const pricingDetails = document.getElementById('pricing-details');
+            pricingToggle.addEventListener('click', () => {
+                const expanded = !pricingDetails.classList.contains('hidden');
+                pricingDetails.classList.toggle('hidden');
+                pricingToggle.textContent = expanded ? 'More info' : 'Hide info';
+            });
         });
     </script>
 
 </body>
 </html>
-
