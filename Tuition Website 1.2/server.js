@@ -17,8 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 // Serve all static files (like index.html) from the root directory.
 // This is simpler and works well for your project structure.
-app.use(express.static(path.join(__dirname)));
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 // --- DATABASE INITIALIZATION ---
 const db = new sqlite3.Database(DB_PATH, (err) => {
