@@ -3,38 +3,28 @@ const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs').promises; // Using promises version of fs
+const fs = require('fs').promises;
 const app = express();
 
 // --- CONFIGURATION ---
 const PORT = process.env.PORT || 3000;
-// On Render, this path points to your persistent disk.
 const DISK_MOUNT_PATH = '/var/data'; 
 const DB_PATH = path.join(DISK_MOUNT_PATH, 'responses.db');
-// It's best practice to use an environment variable for the password.
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'CorrectHorseBatteryStaple'; 
 
 // --- MIDDLEWARE ---
 app.use(cors());
 app.use(bodyParser.json());
-
-// **FIX 1: CLEANER STATIC FILE SERVING**
-// Serve all static files (HTML, CSS, video) from the 'public' directory.
-// This is more secure and organized than serving the entire root directory.
-// Make sure your index.html, responses.html, and presentation.mp4 are inside the 'public' folder.
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // --- ASYNCHRONOUS SERVER START FUNCTION ---
-// We wrap the entire server startup in an async function to handle database initialization properly.
 const startServer = async () => {
   try {
-    // **FIX 2: AWAIT DATABASE CONNECTION**
-    // Ensure the directory for the database exists.
+    // Ensure the persistent disk directory exists
     await fs.mkdir(DISK_MOUNT_PATH, { recursive: true });
     console.log(`Ensured directory exists at ${DISK_MOUNT_PATH}`);
 
-    // Connect to the database and wait for it to be ready.
+    // Connect to the database
     const db = await new Promise((resolve, reject) => {
       const database = new sqlite3.Database(DB_PATH, (err) => {
         if (err) {
@@ -46,14 +36,16 @@ const startServer = async () => {
       });
     });
 
-    // Create the table if it doesn't exist.
+    // Create the table with the new columns if it doesn't exist
     await db.run(`CREATE TABLE IF NOT EXISTS responses (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       parentName TEXT,
+      childName TEXT,
       childAge TEXT,
       tuitionReason TEXT,
       needs TEXT,
       otherNeeds TEXT,
+      additionalInfo TEXT,
       contactMethod TEXT,
       phoneNumber TEXT,
       emailAddress TEXT,
@@ -64,19 +56,16 @@ const startServer = async () => {
     console.log('Database table "responses" is ready.');
 
     // --- API ROUTES ---
-    // All API routes are defined *after* the database is confirmed to be connected.
 
     // API to submit the form
     app.post('/api/submit', (req, res) => {
-      const { parentName, childAge, tuitionReason, needs, otherNeeds, contactMethod, phoneNumber, emailAddress, otherContact } = req.body;
+      const { parentName, childName, childAge, tuitionReason, needs, otherNeeds, additionalInfo, phoneNumber, emailAddress } = req.body;
       
-      // **FIX 3: CORRECT DATA HANDLING**
-      // Convert array of 'needs' to a human-readable, comma-separated string.
       const needsString = Array.isArray(needs) ? needs.join(', ') : needs;
 
       db.run(
-        `INSERT INTO responses (parentName, childAge, tuitionReason, needs, otherNeeds, contactMethod, phoneNumber, emailAddress, otherContact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [parentName, childAge, tuitionReason, needsString, otherNeeds, contactMethod, phoneNumber, emailAddress, otherContact],
+        `INSERT INTO responses (parentName, childName, childAge, tuitionReason, needs, otherNeeds, additionalInfo, phoneNumber, emailAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [parentName, childName, childAge, tuitionReason, needsString, otherNeeds, additionalInfo, phoneNumber, emailAddress],
         function (err) {
           if (err) {
             console.error('Database insert error:', err);
@@ -88,7 +77,7 @@ const startServer = async () => {
       );
     });
 
-    // API to get all responses (requires password)
+    // API to get all responses
     app.post('/api/responses', (req, res) => {
       const { password } = req.body;
       if (password !== ADMIN_PASSWORD) {
@@ -106,7 +95,6 @@ const startServer = async () => {
     // API to mark a response as actioned
     app.post('/api/actioned/:id', (req, res) => {
       const { password } = req.body;
-      // It's good practice to password-protect actions that modify data.
       if (password !== ADMIN_PASSWORD) {
         return res.status(401).json({ error: 'Incorrect password' });
       }
@@ -152,16 +140,16 @@ const startServer = async () => {
     });
 
     // --- SERVER START ---
-    // The server only starts listening after all setup is complete.
     app.listen(PORT, () => {
       console.log(`Server is running and listening on http://localhost:${PORT}`);
     });
 
   } catch (error) {
     console.error('Failed to start the server:', error);
-    process.exit(1); // Exit the process if the database can't be initialized
+    process.exit(1);
   }
 };
 
 // --- RUN THE SERVER ---
 startServer();
+
