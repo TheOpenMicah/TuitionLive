@@ -9,6 +9,14 @@
     .actioned-row {
       background-color: #d1fae5 !important;
     }
+    /* Ensure table cells break long words/text to prevent overflow */
+    td {
+      word-break: break-word;
+      vertical-align: top;
+    }
+    th {
+      vertical-align: top;
+    }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-8">
@@ -27,15 +35,17 @@
         <table class="table-auto w-full text-sm">
           <thead>
             <tr class="bg-gray-200">
-              <th class="px-4 py-2">Parent</th>
-              <th class="px-4 py-2">Child Age</th>
-              <th class="px-4 py-2">Goal</th>
-              <th class="px-4 py-2">Needs</th>
-              <th class="px-4 py-2">Other Needs</th>
-              <th class="px-4 py-2">Phone</th>
-              <th class="px-4 py-2">Email</th>
-              <th class="px-4 py-2">Submitted</th>
-              <th class="px-4 py-2">Status</th>
+              <th class="px-4 py-2 text-left">Parent</th>
+              <th class="px-4 py-2 text-left">Child Name</th>
+              <th class="px-4 py-2 text-left">Child Age</th>
+              <th class="px-4 py-2 text-left">Goal</th>
+              <th class="px-4 py-2 text-left">Needs</th>
+              <th class="px-4 py-2 text-left">Other Needs</th>
+              <th class="px-4 py-2 text-left">Additional Info</th>
+              <th class="px-4 py-2 text-left">Phone</th>
+              <th class="px-4 py-2 text-left">Email</th>
+              <th class="px-4 py-2 text-left">Submitted</th>
+              <th class="px-4 py-2 text-left">Status</th>
             </tr>
           </thead>
           <tbody id="responses-table">
@@ -60,7 +70,7 @@
 
       let currentPassword = '';
       const fetchAndRenderResponses = (password) => {
-        currentPassword = password; // Store for later button actions
+        currentPassword = password;
         fetch('/api/responses', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -76,28 +86,25 @@
           responsesSection.classList.remove('hidden');
           responsesTable.innerHTML = '';
           document.getElementById('delete-actioned-container').classList.remove('hidden');
-
-          // Separate actioned and un-actioned responses
-          const unActioned = data.filter(resp => !resp.actioned);
-          const actioned = data.filter(resp => resp.actioned);
-          const sortedResponses = [...unActioned, ...actioned];
-
-          sortedResponses.forEach(resp => {
+          
+          data.forEach(resp => {
             const tr = document.createElement('tr');
-            tr.className = resp.actioned ? 'actioned-row even:bg-gray-50' : 'even:bg-gray-50';
+            tr.className = resp.actioned ? 'actioned-row border-b' : 'border-b even:bg-gray-50';
             let actionButtonHtml = resp.actioned 
               ? `<button class='unaction-btn bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 text-xs' data-id='${resp.id}'>Un-action</button>`
               : `<button class='action-btn bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-xs' data-id='${resp.id}'>Action</button>`;
             tr.innerHTML = `
-              <td class="border px-4 py-2">${resp.parentName || ''}</td>
-              <td class="border px-4 py-2">${resp.childAge || ''}</td>
-              <td class="border px-4 py-2">${resp.tuitionReason || ''}</td>
-              <td class="border px-4 py-2">${resp.needs || ''}</td>
-              <td class="border px-4 py-2">${resp.otherNeeds || ''}</td>
-              <td class="border px-4 py-2">${resp.phoneNumber || ''}</td>
-              <td class="border px-4 py-2">${resp.emailAddress || ''}</td>
-              <td class="border px-4 py-2">${resp.submittedAt ? new Date(resp.submittedAt).toLocaleString() : ''}</td>
-              <td class="border px-4 py-2 text-center">${actionButtonHtml}</td>
+              <td class="px-4 py-2">${resp.parentName || ''}</td>
+              <td class="px-4 py-2">${resp.childName || ''}</td>
+              <td class="px-4 py-2">${resp.childAge || ''}</td>
+              <td class="px-4 py-2">${resp.tuitionReason || ''}</td>
+              <td class="px-4 py-2">${resp.needs || ''}</td>
+              <td class="px-4 py-2">${resp.otherNeeds || ''}</td>
+              <td class="px-4 py-2">${resp.additionalInfo || ''}</td>
+              <td class="px-4 py-2">${resp.phoneNumber || ''}</td>
+              <td class="px-4 py-2">${resp.emailAddress || ''}</td>
+              <td class="px-4 py-2">${resp.submittedAt ? new Date(resp.submittedAt).toLocaleString() : ''}</td>
+              <td class="px-4 py-2 text-center">${actionButtonHtml}</td>
             `;
             responsesTable.appendChild(tr);
           });
@@ -137,7 +144,6 @@
         }
       };
 
-      // Delete actioned responses button
       const deleteActionedBtn = document.getElementById('delete-actioned-btn');
       deleteActionedBtn.addEventListener('click', async () => {
         if (!currentPassword) {
@@ -167,3 +173,4 @@
   </script>
 </body>
 </html>
+
