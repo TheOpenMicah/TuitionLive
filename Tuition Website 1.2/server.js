@@ -36,7 +36,7 @@ const startServer = async () => {
       });
     });
 
-    // Create the table with the new columns if it doesn't exist
+    // Create the table with the correct columns if it doesn't exist
     await db.run(`CREATE TABLE IF NOT EXISTS responses (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       parentName TEXT,
@@ -46,10 +46,8 @@ const startServer = async () => {
       needs TEXT,
       otherNeeds TEXT,
       additionalInfo TEXT,
-      contactMethod TEXT,
       phoneNumber TEXT,
       emailAddress TEXT,
-      otherContact TEXT,
       actioned INTEGER DEFAULT 0,
       submittedAt DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
@@ -59,10 +57,12 @@ const startServer = async () => {
 
     // API to submit the form
     app.post('/api/submit', (req, res) => {
+      // Destructure only the fields sent from the updated form
       const { parentName, childName, childAge, tuitionReason, needs, otherNeeds, additionalInfo, phoneNumber, emailAddress } = req.body;
       
       const needsString = Array.isArray(needs) ? needs.join(', ') : needs;
 
+      // Updated INSERT statement to match the new data structure
       db.run(
         `INSERT INTO responses (parentName, childName, childAge, tuitionReason, needs, otherNeeds, additionalInfo, phoneNumber, emailAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [parentName, childName, childAge, tuitionReason, needsString, otherNeeds, additionalInfo, phoneNumber, emailAddress],
