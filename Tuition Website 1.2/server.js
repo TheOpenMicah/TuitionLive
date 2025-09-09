@@ -40,18 +40,42 @@ const startServer = async () => {
     await db.run(`CREATE TABLE IF NOT EXISTS responses (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       parentName TEXT,
-      childName TEXT,
       childAge TEXT,
       tuitionReason TEXT,
       needs TEXT,
       otherNeeds TEXT,
-      additionalInfo TEXT,
       phoneNumber TEXT,
       emailAddress TEXT,
       actioned INTEGER DEFAULT 0,
       submittedAt DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
     console.log('Database table "responses" is ready.');
+
+    // --- DATABASE MIGRATION ---
+    // This section updates the table schema for existing databases.
+    const addColumnIfNotExists = (columnName, columnType) => {
+        return new Promise((resolve, reject) => {
+            db.all(`PRAGMA table_info(responses)`, (err, columns) => {
+                if (err) return reject(err);
+                const columnExists = columns.some(col => col.name === columnName);
+                if (!columnExists) {
+                    console.log(`Adding column '${columnName}' to 'responses' table.`);
+                    db.run(`ALTER TABLE responses ADD COLUMN ${columnName} ${columnType}`, (alterErr) => {
+                        if (alterErr) return reject(alterErr);
+                        resolve();
+                    });
+                } else {
+                    resolve(); // Column already exists, do nothing.
+                }
+            });
+        });
+    };
+
+    // Add the new columns that are required by the form.
+    await addColumnIfNotExists('childName', 'TEXT');
+    await addColumnIfNotExists('additionalInfo', 'TEXT');
+    console.log('Database migration check complete.');
+
 
     // --- API ROUTES ---
 
